@@ -1,0 +1,354 @@
+﻿<****** 2G ******>
+<END>
+
+<2G ACTIVATE CELL BROADCAST>
+# Ativar Cell Broadcast
+- Verificar se está ativo (SMS CB USED....Y)
+ZEQO:SEG={bts_id}:MIS;
+ZEQO:SEG={bts_id}:MIS;
+ZEQO:SEG={bts_id}:MIS;
+- Activar (SMS CB USED)
+ZEQM:SEG=bts_id:CB=Y;
+ZEQM:SEG=bts_id:CB=Y;
+ZEQM:SEG=bts_id:CB=Y;
+-Viricar SMS disponiveis na BSC
+ZECP;
+-Confirmar CDR ou LAD na MSS para Atribuir SMS Index correcto
+ZECS:core_cdr_lad:BTS=bts_id;
+ZECS:core_cdr_lad:BTS=bts_id;
+ZECS:core_cdr_lad:BTS=bts_id;
+-Verificar que SMS Index activo está correto em cada setor
+ZECP:BTS=bts_id;
+ZECP:BTS=bts_id;
+ZECP:BTS=bts_id;
+<END>
+
+<2G DUMP BSC>
+Airscale
+ZQNI;
+ZQRI:BCXU;
+ZQRI:ETME;
+ZQRI:ETMA;
+ZEBP;
+
+FlexiBSC / mcBSC
+ZQNI;
+ZQRI:BCSU;
+ZQRI:ETPE;
+ZEBP;	
+<END>
+
+<2G BSC CREATE LAC>
+MCC - Verificar na BSC
+MNC - Verificar na BSC
+RAC - Verificar na BSC
+NSEI- Verificar na BSC
+ZEBF:MCC=724,MNC=31,LAC=215,RAC=0:NSEI=4700;	
+<END>
+
+<2G BSC SW - SOFTWARE>
+ZEWL;                       --> Mostra as versões de SW disponiveis na BSC
+ZEWO:bcf_id;                --> Mostra a versão de SW carregada na BCF
+ZEWA:bcf_id:NW:EX4MP1_A51:;	--> Adiciona package de software ao site (NW)
+ZEWH:bcf_id:ST1=NW,ST2=BU;  --> Troca SW do NW para BU
+ZEWV:bcf_id:BU;             --> Coloca SW do BU como default
+ZEWE:bcf_id:NW;             --> Remove package do NW MAL	
+<END>
+
+<2G BSC FLEXI MULTIRADIO TRX HW LICENCE>
+ZW7I:FEA,FULL:FEA=1379;    --> Flexi Multiradio TRX HW Activation  ( poucas licenças disponiveis ) 	
+ZW7I:UCAP,FULL:FEA=1379;   --> Flexi Multiradio TRX HW Activation  ( poucas licenças disponiveis ) 
+<END>
+
+<2G BSC FLEXI MULTIRADIO POWER LICENCE>
+ZW7I:FEA,FULL:FEA=3730;    --> GSM Power License for MultiRadio 	  
+ZW7I:UCAP,FULL:FEA=3730;   --> GSM Power License for MultiRadio 
+<END>
+
+<2G BSC-BTS FSxG HW ACTIVATION LICENCE>
+ZW7I:FEA,FULL:FEA=3282;    --> FSxG BTS HW Activation License ( não existe LK ) 
+<END>
+
+<2G EXTERNAL ALARMES>
+ZEFO:bcf_id:IOP;           --> Alarmes configurados na BCF
+ZEFT:bcf_id:NU=1&&6,;      --> Update/Activar a configuração dos alarmes         
+<END>
+
+
+<2G GPRS/EGPRS ACTIVATE / DEACTIVATE>
+1º bloquear a bts
+ZEQV:BTS
+ZEQO:BTS=2015:GPRS;   ---> Verificar os estados gena e egena
+<END>
+
+<2G DIVERSITY ACTIVATE/DEACTIVATE>
+1º bloquear a bts
+ZEQO:BTS=3644:MIS;    ---> Verificar diversidade
+ZEQM:BTS=XXX:RDIV=Y   ---> Activar diversidade
+<END>
+
+<2G INTERROGATE RELATION BETWEEN MSS - BSC/RNC DATA>
+ZELO:LAC=lac_id,:RT=ALL;
+<END>
+
+<2G DISPLAY ET´s>
+ZDSB;
+<END>
+
+<2G DELETE BCF ALARME>
+ZEOR:bcf_id:alarme_id;
+<END>
+
+<2G CHANGE PASSWORD>
+ZIAG;
+<END>
+
+<2G BCF RESET>
+ZEFR:bcf_id; 
+<END>
+
+<2G BCF RESTART STATUS>
+ZDDS; --> escolher letra monitoring+DC:bcf_id;
+<END>
+
+<2G DISPLAY BSC/BCF ALARMES>
+ZEOL;
+ZEOL:bcf_id;
+<END>
+
+<2G MSS TEST CALL>
+ZEPO:TYPE=BTS,LAC=xxx,CI=xxx,;
+ZRUI:RZ=;
+ZMVO:MSISDN=nºteste;
+ZMCJ:IMSI=nºIMSI::TYPE=D;
+<END>
+
+<2G BSC TRACE CALL>
+ZERO:BTS=xxx;
+<END>
+
+<2G EXTERNAL ALARMS>
+ZEFP:;                                           --> Verificar ID dos alarmes na BSC
+ZEFX:241:INBR=1:ROU=ACT,POL=OPEN:SEV=AL2,TID=13; --> Criar alarmes
+ZEFX:241:INBR=1:ROU=NOT,POL=OPEN:SEV=AL2,TID=13; --> Delete alarmes
+ZEFT:241:NU=1&&6,;                               --> Activar alarmes
+ZEFO:241:IOP:;                                   --> Verificar alarmes configurados na BCF
+<END>
+
+<2G DISPLAY ADJ >
+ZEAP:BTS=543;	--> 2G Income ADJx
+ZEAI:BTS=543;	--> 3G Income ADJx
+ZEAV:BTS=543;	--> 4G Income ADJx
+<END>
+
+<****************************************** 3G ******************************************>
+<END>
+
+
+<3G MSS TEST CALL>
+ZEPO:TYPE=SA,LAC=xxx,SAC=xxx&&xxx;
+ZRUI:RZ=;
+ZMVO:MSISDN=nºteste;
+ZMCJ:IMSI=nºIMSI::TYPE=D;
+<END>
+
+<3G RNC TRACE CALL>
+TRACE DE CHAMADAS IPA-RNC
+ZDDS:ICSU,ipnb_icsu_id;
+ZLP:1,E2K;
+Z1MCD:wbts_id,1,0,0,0;
+
+256 	- DADOS
+128 	- tentativa chamada
+032/064 - chamada de video
+<END>
+
+<3G MCRNC TRACE CALL>
+TRACE DE CHAMADAS mcRNC
+set user
+root
+ssh cspu-ipnb_cspu_id
+ilcliru.sh
+cd /opt/nokiasiemens/SS_QNTools/bin/
+./e2kprb
+MCD:wbts_id,1,,;
+
+256 	- DADOS
+128 	- tentativa chamada
+032/064 - chamada de video
+<END>
+
+<3G RNC CREATE IP ROUTES>
+ZQRU:ADD:IPBR,"A3GRJGUP4450":60000:10000:700:100:ON,0;
+ZQRC:NPGEP,12:VLAN_ID:IPV4=VLAN_USER_PLANE:ID=IPBR;
+ZYGS:C:NPGEP,12,IPBR,VLAN_USER_PLANE,LOCAL_IP_USER_PLANE:PROF=1,ROUTE=IPBR,ALARM=ON,STYPE=MHOP;
+ZQKC:OMU,0&&1:Router_VLAN_O&M,MASK:IFFE0_IP:LOG;
+ZQKC:NPGEP,12:Router_VLAN_O&M,MASK:IP_VLAN_O&M:LOG;
+<END>
+
+<3G RNC DISPLAY IP ROUTES>
+- INTERROGATE IP BASED ROUTE IDENTIFIER
+ZQRL:ID=1581;
+ZQRL:NAME="SITE NAME";
+	
+- INTERROGATE IP BASED ROUTE NETWORK
+ZQRB:NPGEP,12::ID="IPBR-ID";
+
+- HANDLE (INTERROGATE) SESSION
+ZYGS:A:NPGEP,12::; - MOSTRA TODAS AS SESSÕES
+ZYGS:G:NPGEP,12,"IPNB";
+		
+- INTERROGA AS VLANS SE ESTÃO UP OU DOWN E CONFIRMA-SE OS IPS
+ZQRI:NPGEP,12:;
+
+- INTERROGATE STATIC ROUTES
+ZQKB::"DestinationAddress"; 
+ZQKB::NextRouter_VLAN_O&M-1;
+<END>
+
+<3G RNC DELETE IP ROUTES>
+- HANDLE (DELETE) SESSION
+ZYGS:S:NPGEP,12,318:MODE=1; - LOCK
+ZYGS:D:NPGEP,12,"IPBR-ID"; - DELETE
+			
+- DELETE IP BASED ROUTE NETWORK
+ZQRA:NPGEP,2:"Network interface Name":IPV4="IP address":ID="IPBR-ID":
+	
+- MANAGE (DELETE) IP BASED ROUTE IDENTIFIER
+ZQRU:DEL:"IPBR-ID",:;
+		
+- DELETE STATIC ROUTES
+ZQKA:"NBR"; - NBR RECOLHIDO DO COMANDO ZQKB
+<END>
+
+<3G RNC CREATE ATM ROUTES>
+ZLCC:"ATM IF",VP,"VP RNC",,VC:NO,NO:,,,:U,,,U:,,,,,,,:,,,,,:,,,,,:;
+	
+- CREATE TERMINATION POINT - VC OMU
+ZLCC:"ATM IF",VC,"VP RNC","O&M VCI"::U,,,U:U,,,U::::;
+	
+- CREATE TCP/IP ATM INTERFACE
+ZQMF:OMU,,L:"AA IF":"ATM IF","VP RNC","O&M VCI":1,IPOAM:;
+	
+- CREATE NETWORK INTERFACE
+ZQRN:OMU:"AA IF",N:"Default GW",L:"Subnet mask":"TRS IP address":1500::;
+	
+- CREATE STATIC ROUTE
+ZQKC:OMU,0&&1:"Net IP Address/Network IP address","RNC Subnet mask":"TRS IP address":LOG:;
+		
+Net IP --> OI
+Network --> TIM
+    
+- PARA A PLACA NPS1P UTILIZAR O COMANDO ABAIXO EM VEZ DO ANTERIOR
+ZQKC:OMU,0&&1:"Net IP Address",28:"NPS Address":LOG:;
+<END>
+
+<3G RNC DISPLAY ATM ROUTES>
+- INTERROGATE TERMINATION POINT "vc'S"
+ZLCI:"ATM IF",VP:"VP RNC";
+ZLCI:"ATM IF",VC:"VP RNC";
+		
+INTERROGATE ALL TERMINATION POINT OF ATM IF
+ZLCJ:"ATM IF";
+				
+INTERROGATE MAX BANDWIDTH OF ATM IF
+ZLAQ:"ATM IF";
+	
+- INTERROGATE TCP/IP ATM INTERFACE "AA IF"
+ZQMI:OMU:; - PROCURAR PELO "ATM IF" E "VP RNC" CORRESPONDENTE
+	
+- INTERROGATE NETWORK INTERFACE 
+ZQRI:OMU:"AA IF"; - AA IF RECOLLHIDO DO COMANDO ACIMA
+	
+- INTERROGATE STATIC ROUTES 
+ZQKB:::"TRS IP address"; --> Oi
+ZQKB::"Network IP Address"; --> TIM
+AA54
+<END>
+
+<3G RNC DELETE ATM ROUTES>
+- DELETE STATIC ROUTE
+ZQKA:"NBR"; - NBR RECOLHIDO DO COMANDO ZQKB
+	
+- REMOVE NETWORK INTERFACE
+ZQRG:OMU,0&&1:102; - "AA IF" RECOLHDO DO COMANDO ZQMI
+	
+- REMOVE TCP/IP ATM INTERFACE
+ZQMD:EXT:OMU,0:AA134; - "AA IF" RECOLHDO DO COMANDO ZQMI
+	
+- BLOQUEAR VC'S
+ZLCS:"ATM IF","VP RNC","VCI":FLOCK:;
+	
+- REMOVE USAGE OF TERMINATION POINT BY FORCE
+ZLCY:"ATM IF","VP RNC","VCI":"USAGE":; - USAGE = CNBAP OU DNBAP OU IPOAM OU AAL2SL, CONFORME VCI EM QUESTÃO
+	
+- DELETE TERMINATION POINT
+ZLCD:"ATM IF","VP RNC","VCI":;
+ZLCD:"ATM IF","VP RNC"; - APAGAR VP
+<END>
+
+
+
+<3G MCRNC CREATE ROUTES>
+* Rotas IPBR: (adicionar none no final)
+add networking ipbr ipbr-id 1396 route-bandwidth 100000 committed-bandwidth 98200 committed-dcn-bandwidth 100 committed-sig-bandwidth 700 ipbr-name NS03AMMNS24 dspm-profile-id 6 phb-profile-id 6 scheduler-type none 
+
+* Rotas IPRO:
+add networking ipro ipbr-id 1396 ip-address 10.192.129.39 iface vl1292iub2 owner /QNUP-7 vrf default
+
+* Rotas BFD:
+add networking instance default monitoring bfd session /QNUP-7 name 396 srcaddr 10.192.129.39 dstaddr 10.246.178.18 tx-interval 500 rx-interval 500 detect-mult 5
+
+* Rotas Estáticas (retirar '/' & priority)
+set routing instance default node EIPU-7 static-route 10.246.178.16/30 nexthop gateway address 10.192.129.33 on (para apagar as rotas estaticas é por off) 
+set routing instance default node EIPU-6 static-route 10.246.178.16/30 nexthop gateway address 10.192.129.1 on (para apagar as rotas estaticas é por off)
+<END>
+
+<3G MCRNC DISPLAY ROUTES>
+* Interrogar as ROTAS & guardar as respostas:
+show networking ipbr ipbr-id 1644
+show networking ipro ipbr-id 1644
+show networking instance default monitoring bfd session config name 644
+show routing instance default node EIPU-7 static-route config
+show routing instance default node EIPU-6 static-route config
+<END>
+
+<3G MCRNC DELETE ROUTES>
+delete networking monitoring bfd session /QNUP-7 name 239
+delete networking ipro owner /QNUP-7 iface vl1292iub2 ipbr-id 1239 ip-address 10.192.129.39
+delete networking ipbr ipbr-id 1239 ipbr-name KAMMAO40
+<END>
+
+<3G DELETE WBTS ALARME>
+ZAAN:alarme_id;
+<END>
+
+
+
+<3G DISPLAY RNC/WBTS ALARMES>
+show alarm active filter-by managed-object *WBTS-49*
+<END>
+
+<3G DISPLAY MCRNC/WBTS ALARMES>
+ZAAP:WBTS,wbts_id;
+<END>
+
+<****** MSS ******>
+<END> 
+
+<MSS DISPLAY ALARME>
+ZAHO;            --> Todos os alarmes
+ZAHO::NR=2745;   --> Core Alarmes
+<END>
+
+<MSS DELETE ALARME>
+ZAKA::NR=2745;
+<END>
+
+<****** MSS ******>
+<END> 
+
+<IOMS DISPLAY ALARME>
+ztopocli -ld | grep MRBTS-990101
+ztopocli -r MRBTS-990101
+<END>
