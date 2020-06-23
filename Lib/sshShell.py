@@ -8,20 +8,19 @@ from paramiko.ssh_exception import AuthenticationException, SSHException, BadHos
 from threading import Thread
 import time
 
-customerName =['Claro Brasil',
-               'TIM Brasil',
-               'OI Brasil']
+customerName =['000 000',
+               '000 000',
+               '000 000']
 
-elementNameClaro = [('nok2cs1','10.115.181.128'),
-                    ('nok2cs2','10.115.181.129')]
+elementNameClaro = [('nok2cs1','000.000.000.000'),
+                    ('nok2cs2','000.000.000.000')]
 
 elementNameTIM = [('TIM SSH1', '000.000.000.000'),
                   ('TIM SSH2', '000.000.000.000')]
 
-elementNameOI = [('RC06cs1(NA 5)', '10.115.181.87'),
-                 ('RC06cs2(NA 5)', '10.115.181.88'),
-                 ('RC07cs1(NA 5)', '10.115.181.96'),
-                 ('RC07cs2(NA 5)', '10.115.181.97')]
+elementNameOI = [('RC06cs1(NA 5)', '000.000.000.000'),
+                 ('RC06cs2(NA 5)', '000.000.000.000000'),
+                 ('RC07cs2(NA 5)', '000.000.000.000')]
 
 
 class CustomNotebook(ttk.Notebook):
